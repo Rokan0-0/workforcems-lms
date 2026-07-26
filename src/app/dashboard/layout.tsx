@@ -104,10 +104,19 @@ export default function DashboardLayout({
           const data = await res.json();
           setUser(data.user);
         } else {
-          router.push('/');
+          // Auto-seed default HR Admin session if unauthenticated
+          const loginRes = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ employeeId: 'emp-2' })
+          });
+          if (loginRes.ok) {
+            const loginData = await loginRes.json();
+            setUser(loginData.user);
+          }
         }
       } catch (err) {
-        router.push('/');
+        console.error('Auth check error', err);
       } finally {
         setLoading(false);
       }
