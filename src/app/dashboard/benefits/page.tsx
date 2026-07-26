@@ -207,15 +207,19 @@ export default function BenefitsPage() {
     document.body.removeChild(link);
   };
 
-  if (loading && !data) {
+  if (!data) {
     return (
       <div style={{ padding: '32px', textAlign: 'center', fontSize: '15px', color: 'var(--text-muted)' }}>
-        Loading HMO Benefits & Healthcare Portal...
+        Loading healthcare benefits...
       </div>
     );
   }
 
-  const { employees, departments, plans, enrollments, claims } = data;
+  const employees = data?.employees || [];
+  const departments = data?.departments || [];
+  const plans = data?.plans || [];
+  const enrollments = data?.enrollments || [];
+  const claims = data?.claims || [];
   const isAdmin = user?.role === 'HR Admin';
 
   // Scoped Data Rules

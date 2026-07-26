@@ -544,7 +544,7 @@ export default function TrainingPage() {
     }
   };
 
-  if (loading && !data) {
+  if (!data) {
     return (
       <div style={{ padding: '32px', textAlign: 'center', fontSize: '15px', color: 'var(--text-muted)' }}>
         Loading training LMS...
@@ -552,7 +552,9 @@ export default function TrainingPage() {
     );
   }
 
-  const { employees, courses, enrollments } = data;
+  const employees = data?.employees || [];
+  const courses = data?.courses || [];
+  const enrollments = data?.enrollments || [];
   const isAdmin = user?.role === 'HR Admin';
   const myEnrollments = enrollments.filter((e: any) => e.employeeId === user?.id).map((e: any) => ({ ...e, course: courses.find((c: any) => c.id === e.courseId) }));
   const availableCourses = courses.filter((course: any) => !enrollments.some((enrollment: any) => enrollment.courseId === course.id && enrollment.employeeId === user?.id));
