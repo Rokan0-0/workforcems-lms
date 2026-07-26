@@ -5,7 +5,7 @@ import { useSession } from '../session-provider';
 import { Shield, Users, Plus, CheckCircle, Heart, Hospital, ChevronDown, ChevronUp, FileSpreadsheet, AlertCircle, DollarSign, Download, ExternalLink, Activity, User, Trash2 } from 'lucide-react';
 
 export default function BenefitsPage() {
-  const { user, triggerRefresh } = useSession();
+  const { user, refreshFlag, triggerRefresh } = useSession();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -72,7 +72,7 @@ export default function BenefitsPage() {
       }
     }
     fetchData();
-  }, [user]);
+  }, [user, refreshFlag]);
 
   const handleAddDependant = (e: React.FormEvent) => {
     e.preventDefault();

@@ -7638,7 +7638,7 @@
       "message": "Your leave request for June 10-12 has been approved.",
       "audience": "Specific Employee",
       "recipientId": "emp-6",
-      "read": false,
+      "read": true,
       "createdDate": "2026-06-09"
     },
     {
@@ -7646,7 +7646,7 @@
       "title": "New company memo",
       "message": "A new company memo has been posted: End of Quarter Townhall.",
       "audience": "All Staff",
-      "read": false,
+      "read": true,
       "createdDate": "2026-06-12"
     },
     {
@@ -7655,7 +7655,7 @@
       "message": "Your safety incident report is under review by HR.",
       "audience": "Specific Employee",
       "recipientId": "emp-8",
-      "read": false,
+      "read": true,
       "createdDate": "2026-06-11"
     }
   ],
