@@ -286,15 +286,20 @@ export default function DashboardLayout({
 
         {/* Sidebar */}
         <aside className={`sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
-          <div className="sidebar-brand" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <img src="/woms_logo.png" alt="WorkforceMS Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
-            <span style={{ fontWeight: 800, fontSize: '19px', letterSpacing: '-0.5px', color: '#ffffff' }}>
-              WorkforceMS
-            </span>
-          </div>
+          <div className="sidebar-brand">
+        <img
+          src="/woms_logo.png"
+          alt="WorkforceMS"
+          style={{ width: '32px', height: '32px', borderRadius: '6px', objectFit: 'contain', flexShrink: 0 }}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontSize: '18px', fontWeight: 800, letterSpacing: '-0.5px', color: '#ffffff', lineHeight: 1.1 }}>WorkforceMS</span>
+          <span style={{ fontSize: '11px', color: '#9ca3af', lineHeight: 1.2 }}>Learning Management</span>
+        </div>
+      </div>
 
           <nav className="sidebar-menu">
-            <div className="menu-section">{isWorkforceMSMode ? 'WorkforceMS Engine' : 'HR Super-App'}</div>
+            <div className="menu-section">{isWorkforceMSMode ? '' : 'HR Super-App'}</div>
             <ul>
               {menuItems.map(item => {
                 const Icon = item.icon;
@@ -313,225 +318,25 @@ export default function DashboardLayout({
                 );
               })}
             </ul>
+
           </nav>
 
-          <div className="sidebar-footer">
-            {user && (
-              <div className="user-badge">
-                <img
-                  src={user.profilePhoto}
-                  alt={user.name}
-                  className="user-avatar"
-                  style={{ border: '2px solid #16a34a' }}
-                />
-                <div className="user-info">
-                  <div className="user-name">{user.name}</div>
-                  <div className="user-role">{user.role}</div>
-                </div>
-              </div>
-            )}
-          </div>
+        
+              {/* Log Out */}
+              <button className="signout-btn" onClick={handleLogout}>
+                <LogOut size={18} style={{ marginRight: '6px', verticalAlign: 'middle', color: 'var(--pure-red)' }} />
+                Sign Out
+              </button>
         </aside>
 
         {/* Main Workspace */}
         <div className="main-content">
           <header className="topbar">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <button
-                className="hamburger-btn"
-                onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-                title="Toggle Menu"
-              >
-                <Menu size={20} />
-              </button>
-              <div className="page-title-area">
-                <h1 className="page-title">{getHeaderTitle()}</h1>
-                <p className="page-subtitle">WorkforceMS Engine • AI LMS + Healthcare Benefits</p>
-              </div>
-            </div>
 
-            <div className="topbar-actions">
-              {/* Instant Switcher Dropdown */}
-              <div className="role-switcher-container">
-                <span className="role-switcher-label">Role:</span>
-                <select
-                  className="role-select"
-                  value={user?.id || ''}
-                  onChange={(e) => switchRole(e.target.value)}
-                  style={{ color: '#22c55e' }}
-                >
-                  <option value="emp-2">Admin: Olumide (HR)</option>
-                  <option value="emp-1">Admin: Chioma (Engineering)</option>
-                  <option value="emp-3">Employee: Fatima (Finance)</option>
-                  <option value="emp-19">Employee: Taiwo (Recent Hire)</option>
-                </select>
-              </div>
-
-              {/* Notifications Bell */}
-              <div style={{ position: 'relative' }}>
-                <button
-                  className="theme-btn"
-                  onClick={() => setShowNotifications(!showNotifications)}
-                  title="Notifications"
-                  style={{ position: 'relative' }}
-                >
-                  <Bell size={18} />
-                  {unreadCount > 0 && (
-                    <span style={{
-                      position: 'absolute',
-                      top: '2px',
-                      right: '2px',
-                      backgroundColor: 'var(--danger)',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '16px',
-                      height: '16px',
-                      fontSize: '10px',
-                      fontWeight: 'bold',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      {unreadCount}
-                    </span>
-                  )}
-                </button>
-
-                {showNotifications && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '46px',
-                    right: 0,
-                    width: '320px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: '1px solid var(--border-color)',
-                    borderRadius: 'var(--radius-lg)',
-                    boxShadow: 'var(--shadow-lg)',
-                    zIndex: 1000,
-                    maxHeight: '400px',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}>
-                    <div style={{
-                      padding: '12px 16px',
-                      borderBottom: '1px solid var(--border-color)',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}>
-                      <strong style={{ fontSize: '14px' }}>Notifications</strong>
-                      {unreadCount > 0 && (
-                        <button
-                          onClick={() => markNotificationRead()}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--primary)',
-                            fontSize: '11px',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            padding: 0
-                          }}
-                        >
-                          Mark all as read
-                        </button>
-                      )}
-                    </div>
-
-                    <div style={{
-                      overflowY: 'auto',
-                      flex: 1,
-                      maxHeight: '300px'
-                    }}>
-                      {notifications.length === 0 ? (
-                        <div style={{
-                          padding: '24px',
-                          textAlign: 'center',
-                          color: 'var(--text-muted)',
-                          fontSize: '12px'
-                        }}>
-                          No notifications yet.
-                        </div>
-                      ) : (
-                        notifications.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()).map(note => (
-                          <div
-                            key={note.id}
-                            style={{
-                              padding: '12px 16px',
-                              borderBottom: '1px solid var(--border-color)',
-                              backgroundColor: note.read ? 'transparent' : 'rgba(59, 130, 246, 0.04)',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              gap: '4px',
-                              cursor: 'pointer'
-                            }}
-                            onClick={() => {
-                              if (!note.read) {
-                                markNotificationRead(note.id);
-                              }
-                              router.push('/dashboard/memos');
-                              setShowNotifications(false);
-                            }}
-                          >
-                            <div style={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'flex-start',
-                              gap: '8px'
-                            }}>
-                              <span style={{
-                                fontSize: '13px',
-                                fontWeight: note.read ? 600 : 800,
-                                color: note.read ? 'var(--text-secondary)' : 'var(--text-primary)'
-                              }}>
-                                {note.title}
-                              </span>
-                              {!note.read && (
-                                <span style={{
-                                  width: '6px',
-                                  height: '6px',
-                                  borderRadius: '50%',
-                                  backgroundColor: 'var(--primary)',
-                                  flexShrink: 0,
-                                  marginTop: '5px'
-                                }} />
-                              )}
-                            </div>
-                            <p style={{
-                              margin: 0,
-                              fontSize: '12px',
-                              color: 'var(--text-muted)',
-                              lineHeight: '1.4'
-                            }}>
-                              {note.message}
-                            </p>
-                            <span style={{
-                              fontSize: '10px',
-                              color: 'var(--text-muted)',
-                              marginTop: '2px'
-                            }}>
-                              {note.createdDate}
-                            </span>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Theme Toggle */}
-              <button className="theme-btn" onClick={toggleTheme} title="Toggle Light/Dark Theme">
-                {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-              </button>
-
-              {/* Log Out */}
-              <button className="signout-btn" onClick={handleLogout}>
-                <LogOut size={16} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
-                Sign Out
-              </button>
-            </div>
+          <p>Learning Management and Health benefits</p>
           </header>
+
+            
 
           {/* Page Body */}
           <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
