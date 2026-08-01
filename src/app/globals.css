@@ -13,6 +13,7 @@
   --text-muted: #64748b;
   --border-color: #e2e8f0;
   --pure-red: #f00505;
+  --text-main: #000000;
   
   --primary: #16a34a;
   --primary-hover: #15803d;
@@ -153,6 +154,12 @@ button, input, select, textarea {
   overflow-y: auto;
 }
 
+.sidebar-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .menu-section {
   font-size: 10px;
   font-weight: 700;
@@ -224,7 +231,7 @@ button, input, select, textarea {
 .user-name {
   font-size: 12px;
   font-weight: 600;
-  color: #000000;
+  color: var(--text-main);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
